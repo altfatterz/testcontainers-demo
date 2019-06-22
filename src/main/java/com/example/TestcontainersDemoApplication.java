@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.sql.DataSourceDefinition;
 import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 @EnableTransactionManagement
@@ -35,9 +34,10 @@ class CustomerService {
 
     @Transactional
     void saveAll(String... names) {
-        Arrays.stream(names)
+        List<Customer> customers = Arrays.stream(names)
                 .map(name -> new Customer(null, name))
-                .flatMap(customer -> Stream.of(customerRepository.save(customer)));
+                .collect(Collectors.toList());
+        customerRepository.saveAll(customers);
     }
 
 }
