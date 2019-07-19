@@ -52,5 +52,6 @@ interface CustomerRepository extends CrudRepository<Customer, String> {
 class Customer {
 
     private String id;
+
     private String name;
 }
